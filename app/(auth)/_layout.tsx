@@ -1,16 +1,18 @@
-import { Stack } from 'expo-router';
-import { useAuth } from '@/context/AuthContext';
-import { Redirect } from 'expo-router';
+"use client"
+
+import { Stack } from "expo-router"
+import { useAuth } from "@/context/AuthContext"
+import { Redirect } from "expo-router"
 
 export default function AuthLayout() {
-  const { user, loading } = useAuth();
+  const { user, loading } = useAuth()
 
   if (loading) {
-    return null;
+    return null
   }
 
   if (user) {
-    return <Redirect href="/(tabs)" />;
+    return <Redirect href="/(tabs)" />
   }
 
   return (
@@ -19,5 +21,5 @@ export default function AuthLayout() {
       <Stack.Screen name="signup" />
       <Stack.Screen name="forgot-password" />
     </Stack>
-  );
+  )
 }

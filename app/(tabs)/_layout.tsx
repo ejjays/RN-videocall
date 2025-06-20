@@ -1,19 +1,21 @@
-import { Tabs } from 'expo-router';
-import { useAuth } from '@/context/AuthContext';
-import { Redirect } from 'expo-router';
-import { useTheme } from '@/context/ThemeContext';
-import { Video, Users, Clock, Settings } from 'lucide-react-native';
+"use client"
+
+import { Tabs } from "expo-router"
+import { useAuth } from "@/context/AuthContext"
+import { Redirect } from "expo-router"
+import { useTheme } from "@/context/ThemeContext"
+import { Video, Users, Clock, Settings } from "lucide-react-native"
 
 export default function TabLayout() {
-  const { user, loading } = useAuth();
-  const { theme } = useTheme();
+  const { user, loading } = useAuth()
+  const { theme } = useTheme()
 
   if (loading) {
-    return null;
+    return null
   }
 
   if (!user) {
-    return <Redirect href="/(auth)/login" />;
+    return <Redirect href="/(auth)/login" />
   }
 
   return (
@@ -32,7 +34,7 @@ export default function TabLayout() {
         },
         tabBarLabelStyle: {
           fontSize: 12,
-          fontFamily: 'Inter-Medium',
+          fontFamily: "Inter-Medium",
           marginTop: 4,
         },
       }}
@@ -40,39 +42,31 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ size, color }) => (
-            <Video size={size} color={color} />
-          ),
+          title: "Home",
+          tabBarIcon: ({ size, color }) => <Video size={size} color={color} />,
         }}
       />
       <Tabs.Screen
         name="contacts"
         options={{
-          title: 'Contacts',
-          tabBarIcon: ({ size, color }) => (
-            <Users size={size} color={color} />
-          ),
+          title: "Contacts",
+          tabBarIcon: ({ size, color }) => <Users size={size} color={color} />,
         }}
       />
       <Tabs.Screen
         name="history"
         options={{
-          title: 'History',
-          tabBarIcon: ({ size, color }) => (
-            <Clock size={size} color={color} />
-          ),
+          title: "History",
+          tabBarIcon: ({ size, color }) => <Clock size={size} color={color} />,
         }}
       />
       <Tabs.Screen
         name="settings"
         options={{
-          title: 'Settings',
-          tabBarIcon: ({ size, color }) => (
-            <Settings size={size} color={color} />
-          ),
+          title: "Settings",
+          tabBarIcon: ({ size, color }) => <Settings size={size} color={color} />,
         }}
       />
     </Tabs>
-  );
+  )
 }
