@@ -1,147 +1,139 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  SafeAreaView,
-  Alert,
-  FlatList,
-} from 'react-native';
-import { router } from 'expo-router';
-import { useAuth } from '@/context/AuthContext';
-import { useTheme } from '@/context/ThemeContext';
-import { Video, Users, Plus, Calendar, Phone } from 'lucide-react-native';
+"use client"
+
+import type React from "react"
+import { useState } from "react"
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Alert, FlatList } from "react-native"
+import { router } from "expo-router"
+import { useAuth } from "@/context/AuthContext"
+import { useTheme } from "@/context/ThemeContext"
+import { Video, Users, Calendar, Phone } from "lucide-react-native"
 
 interface QuickAction {
-  id: string;
-  title: string;
-  subtitle: string;
-  icon: React.ReactNode;
-  color: string;
-  onPress: () => void;
+  id: string
+  title: string
+  subtitle: string
+  icon: React.ReactNode
+  color: string
+  onPress: () => void
 }
 
 interface RecentCall {
-  id: string;
-  name: string;
-  time: string;
-  duration: string;
-  type: 'video' | 'audio';
-  status: 'completed' | 'missed' | 'ongoing';
+  id: string
+  name: string
+  time: string
+  duration: string
+  type: "video" | "audio"
+  status: "completed" | "missed" | "ongoing"
 }
 
 export default function HomeScreen() {
-  const { user } = useAuth();
-  const { theme } = useTheme();
+  const { user } = useAuth()
+  const { theme } = useTheme()
   const [recentCalls] = useState<RecentCall[]>([
     {
-      id: '1',
-      name: 'John Doe',
-      time: '2 hours ago',
-      duration: '45 min',
-      type: 'video',
-      status: 'completed',
+      id: "1",
+      name: "John Doe",
+      time: "2 hours ago",
+      duration: "45 min",
+      type: "video",
+      status: "completed",
     },
     {
-      id: '2',
-      name: 'Team Standup',
-      time: 'Yesterday',
-      duration: '30 min',
-      type: 'video',
-      status: 'completed',
+      id: "2",
+      name: "Team Standup",
+      time: "Yesterday",
+      duration: "30 min",
+      type: "video",
+      status: "completed",
     },
     {
-      id: '3',
-      name: 'Sarah Wilson',
-      time: '2 days ago',
-      duration: '12 min',
-      type: 'audio',
-      status: 'missed',
+      id: "3",
+      name: "Sarah Wilson",
+      time: "2 days ago",
+      duration: "12 min",
+      type: "audio",
+      status: "missed",
     },
-  ]);
+  ])
 
   const startVideoCall = () => {
-    const callId = `call-${Date.now()}`;
-    router.push(`/call/${callId}?type=video`);
-  };
+    const callId = `call-${Date.now()}`
+    router.push(`/call/${callId}?type=video`)
+  }
 
   const startAudioCall = () => {
-    const callId = `call-${Date.now()}`;
-    router.push(`/call/${callId}?type=audio`);
-  };
+    const callId = `call-${Date.now()}`
+    router.push(`/call/${callId}?type=audio`)
+  }
 
   const joinMeeting = () => {
     Alert.alert(
-      'Join Meeting',
-      'Enter meeting ID',
+      "Join Meeting",
+      "Enter meeting ID",
       [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'Join', onPress: () => startVideoCall() },
+        { text: "Cancel", style: "cancel" },
+        { text: "Join", onPress: () => startVideoCall() },
       ],
-      { cancelable: true }
-    );
-  };
+      { cancelable: true },
+    )
+  }
 
   const scheduleMeeting = () => {
-    Alert.alert('Schedule Meeting', 'Meeting scheduling feature coming soon!');
-  };
+    Alert.alert("Schedule Meeting", "Meeting scheduling feature coming soon!")
+  }
 
   const quickActions: QuickAction[] = [
     {
-      id: '1',
-      title: 'Start Video Call',
-      subtitle: 'Begin a new video call',
+      id: "1",
+      title: "Start Video Call",
+      subtitle: "Begin a new video call",
       icon: <Video size={24} color={theme.colors.white} />,
       color: theme.colors.primary,
       onPress: startVideoCall,
     },
     {
-      id: '2',
-      title: 'Start Audio Call',
-      subtitle: 'Begin a new audio call',
+      id: "2",
+      title: "Start Audio Call",
+      subtitle: "Begin a new audio call",
       icon: <Phone size={24} color={theme.colors.white} />,
       color: theme.colors.success,
       onPress: startAudioCall,
     },
     {
-      id: '3',
-      title: 'Join Meeting',
-      subtitle: 'Join with meeting ID',
+      id: "3",
+      title: "Join Meeting",
+      subtitle: "Join with meeting ID",
       icon: <Users size={24} color={theme.colors.white} />,
       color: theme.colors.secondary,
       onPress: joinMeeting,
     },
     {
-      id: '4',
-      title: 'Schedule Meeting',
-      subtitle: 'Plan a future meeting',
+      id: "4",
+      title: "Schedule Meeting",
+      subtitle: "Plan a future meeting",
       icon: <Calendar size={24} color={theme.colors.white} />,
       color: theme.colors.warning,
       onPress: scheduleMeeting,
     },
-  ];
+  ]
 
   const renderQuickAction = ({ item }: { item: QuickAction }) => (
-    <TouchableOpacity
-      style={[styles.quickActionCard, { backgroundColor: item.color }]}
-      onPress={item.onPress}
-    >
-      <View style={styles.quickActionIcon}>
-        {item.icon}
-      </View>
+    <TouchableOpacity style={[styles.quickActionCard, { backgroundColor: item.color }]} onPress={item.onPress}>
+      <View style={styles.quickActionIcon}>{item.icon}</View>
       <Text style={styles.quickActionTitle}>{item.title}</Text>
       <Text style={styles.quickActionSubtitle}>{item.subtitle}</Text>
     </TouchableOpacity>
-  );
+  )
 
   const renderRecentCall = ({ item }: { item: RecentCall }) => (
     <TouchableOpacity style={styles.recentCallItem}>
-      <View style={[
-        styles.callIcon,
-        { backgroundColor: item.type === 'video' ? theme.colors.primary : theme.colors.success }
-      ]}>
-        {item.type === 'video' ? (
+      <View
+        style={[
+          styles.callIcon,
+          { backgroundColor: item.type === "video" ? theme.colors.primary : theme.colors.success },
+        ]}
+      >
+        {item.type === "video" ? (
           <Video size={20} color={theme.colors.white} />
         ) : (
           <Phone size={20} color={theme.colors.white} />
@@ -153,18 +145,21 @@ export default function HomeScreen() {
           {item.time} • {item.duration}
         </Text>
       </View>
-      <View style={[
-        styles.callStatus,
-        { 
-          backgroundColor: item.status === 'completed' 
-            ? theme.colors.success 
-            : item.status === 'missed' 
-              ? theme.colors.error 
-              : theme.colors.warning
-        }
-      ]} />
+      <View
+        style={[
+          styles.callStatus,
+          {
+            backgroundColor:
+              item.status === "completed"
+                ? theme.colors.success
+                : item.status === "missed"
+                  ? theme.colors.error
+                  : theme.colors.warning,
+          },
+        ]}
+      />
     </TouchableOpacity>
-  );
+  )
 
   const styles = StyleSheet.create({
     container: {
@@ -177,13 +172,13 @@ export default function HomeScreen() {
     },
     greeting: {
       fontSize: 24,
-      fontFamily: 'Inter-Bold',
+      fontFamily: "Inter-Bold",
       color: theme.colors.text,
       marginBottom: theme.spacing.xs,
     },
     subtitle: {
       fontSize: 16,
-      fontFamily: 'Inter-Regular',
+      fontFamily: "Inter-Regular",
       color: theme.colors.textSecondary,
     },
     quickActionsContainer: {
@@ -192,23 +187,23 @@ export default function HomeScreen() {
     },
     sectionTitle: {
       fontSize: 18,
-      fontFamily: 'Inter-SemiBold',
+      fontFamily: "Inter-SemiBold",
       color: theme.colors.text,
       marginBottom: theme.spacing.md,
     },
     quickActionsGrid: {
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      justifyContent: 'space-between',
+      flexDirection: "row",
+      flexWrap: "wrap",
+      justifyContent: "space-between",
     },
     quickActionCard: {
-      width: '48%',
+      width: "48%",
       aspectRatio: 1,
       borderRadius: theme.borderRadius.lg,
       padding: theme.spacing.md,
       marginBottom: theme.spacing.md,
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: "center",
+      alignItems: "center",
       ...theme.shadows.md,
     },
     quickActionIcon: {
@@ -216,16 +211,16 @@ export default function HomeScreen() {
     },
     quickActionTitle: {
       fontSize: 14,
-      fontFamily: 'Inter-SemiBold',
+      fontFamily: "Inter-SemiBold",
       color: theme.colors.white,
-      textAlign: 'center',
+      textAlign: "center",
       marginBottom: theme.spacing.xs,
     },
     quickActionSubtitle: {
       fontSize: 12,
-      fontFamily: 'Inter-Regular',
+      fontFamily: "Inter-Regular",
       color: theme.colors.white,
-      textAlign: 'center',
+      textAlign: "center",
       opacity: 0.9,
     },
     recentCallsContainer: {
@@ -233,8 +228,8 @@ export default function HomeScreen() {
       paddingHorizontal: theme.spacing.lg,
     },
     recentCallItem: {
-      flexDirection: 'row',
-      alignItems: 'center',
+      flexDirection: "row",
+      alignItems: "center",
       backgroundColor: theme.colors.surface,
       borderRadius: theme.borderRadius.lg,
       padding: theme.spacing.md,
@@ -245,8 +240,8 @@ export default function HomeScreen() {
       width: 40,
       height: 40,
       borderRadius: theme.borderRadius.full,
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: "center",
+      alignItems: "center",
       marginRight: theme.spacing.md,
     },
     callInfo: {
@@ -254,13 +249,13 @@ export default function HomeScreen() {
     },
     callName: {
       fontSize: 16,
-      fontFamily: 'Inter-SemiBold',
+      fontFamily: "Inter-SemiBold",
       color: theme.colors.text,
       marginBottom: theme.spacing.xs,
     },
     callDetails: {
       fontSize: 14,
-      fontFamily: 'Inter-Regular',
+      fontFamily: "Inter-Regular",
       color: theme.colors.textSecondary,
     },
     callStatus: {
@@ -270,24 +265,22 @@ export default function HomeScreen() {
     },
     emptyState: {
       flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: "center",
+      alignItems: "center",
       paddingVertical: theme.spacing.xl,
     },
     emptyStateText: {
       fontSize: 16,
-      fontFamily: 'Inter-Regular',
+      fontFamily: "Inter-Regular",
       color: theme.colors.textSecondary,
-      textAlign: 'center',
+      textAlign: "center",
     },
-  });
+  })
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.greeting}>
-          Hello, {user?.displayName || 'User'}!
-        </Text>
+        <Text style={styles.greeting}>Hello, {user?.displayName || "User"}!</Text>
         <Text style={styles.subtitle}>Ready to connect?</Text>
       </View>
 
@@ -300,9 +293,7 @@ export default function HomeScreen() {
               style={[styles.quickActionCard, { backgroundColor: action.color }]}
               onPress={action.onPress}
             >
-              <View style={styles.quickActionIcon}>
-                {action.icon}
-              </View>
+              <View style={styles.quickActionIcon}>{action.icon}</View>
               <Text style={styles.quickActionTitle}>{action.title}</Text>
               <Text style={styles.quickActionSubtitle}>{action.subtitle}</Text>
             </TouchableOpacity>
@@ -321,12 +312,10 @@ export default function HomeScreen() {
           />
         ) : (
           <View style={styles.emptyState}>
-            <Text style={styles.emptyStateText}>
-              No recent calls yet. Start your first call!
-            </Text>
+            <Text style={styles.emptyStateText}>No recent calls yet. Start your first call!</Text>
           </View>
         )}
       </View>
     </SafeAreaView>
-  );
+  )
 }

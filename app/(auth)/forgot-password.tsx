@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+"use client"
+
+import { useState } from "react"
 import {
   View,
   Text,
@@ -8,35 +10,35 @@ import {
   KeyboardAvoidingView,
   Platform,
   Alert,
-} from 'react-native';
-import { Link, router } from 'expo-router';
-import { useAuth } from '@/context/AuthContext';
-import { useTheme } from '@/context/ThemeContext';
-import { Mail, ArrowLeft } from 'lucide-react-native';
+} from "react-native"
+import { Link, router } from "expo-router"
+import { useAuth } from "@/context/AuthContext"
+import { useTheme } from "@/context/ThemeContext"
+import { Mail, ArrowLeft } from "lucide-react-native"
 
 export default function ForgotPasswordScreen() {
-  const [email, setEmail] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [emailSent, setEmailSent] = useState(false);
-  const { resetPassword, error } = useAuth();
-  const { theme } = useTheme();
+  const [email, setEmail] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [emailSent, setEmailSent] = useState(false)
+  const { resetPassword, error } = useAuth()
+  const { theme } = useTheme()
 
   const handleResetPassword = async () => {
     if (!email) {
-      Alert.alert('Error', 'Please enter your email address');
-      return;
+      Alert.alert("Error", "Please enter your email address")
+      return
     }
 
     try {
-      setLoading(true);
-      await resetPassword(email);
-      setEmailSent(true);
+      setLoading(true)
+      await resetPassword(email)
+      setEmailSent(true)
     } catch (error: any) {
-      Alert.alert('Error', error.message);
+      Alert.alert("Error", error.message)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const styles = StyleSheet.create({
     container: {
@@ -44,8 +46,8 @@ export default function ForgotPasswordScreen() {
       backgroundColor: theme.colors.background,
     },
     header: {
-      flexDirection: 'row',
-      alignItems: 'center',
+      flexDirection: "row",
+      alignItems: "center",
       paddingHorizontal: theme.spacing.lg,
       paddingTop: theme.spacing.xl,
       paddingBottom: theme.spacing.md,
@@ -55,21 +57,21 @@ export default function ForgotPasswordScreen() {
     },
     content: {
       flex: 1,
-      justifyContent: 'center',
+      justifyContent: "center",
       paddingHorizontal: theme.spacing.lg,
     },
     title: {
       fontSize: 32,
-      fontFamily: 'Inter-Bold',
+      fontFamily: "Inter-Bold",
       color: theme.colors.text,
-      textAlign: 'center',
+      textAlign: "center",
       marginBottom: theme.spacing.sm,
     },
     subtitle: {
       fontSize: 16,
-      fontFamily: 'Inter-Regular',
+      fontFamily: "Inter-Regular",
       color: theme.colors.textSecondary,
-      textAlign: 'center',
+      textAlign: "center",
       marginBottom: theme.spacing.xxl,
     },
     inputContainer: {
@@ -77,13 +79,13 @@ export default function ForgotPasswordScreen() {
     },
     label: {
       fontSize: 14,
-      fontFamily: 'Inter-Medium',
+      fontFamily: "Inter-Medium",
       color: theme.colors.text,
       marginBottom: theme.spacing.sm,
     },
     inputWrapper: {
-      flexDirection: 'row',
-      alignItems: 'center',
+      flexDirection: "row",
+      alignItems: "center",
       borderWidth: 1,
       borderColor: theme.colors.border,
       borderRadius: theme.borderRadius.lg,
@@ -97,15 +99,15 @@ export default function ForgotPasswordScreen() {
     input: {
       flex: 1,
       fontSize: 16,
-      fontFamily: 'Inter-Regular',
+      fontFamily: "Inter-Regular",
       color: theme.colors.text,
     },
     resetButton: {
       backgroundColor: theme.colors.primary,
       borderRadius: theme.borderRadius.lg,
       height: 50,
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: "center",
+      alignItems: "center",
       marginTop: theme.spacing.lg,
       ...theme.shadows.sm,
     },
@@ -114,62 +116,56 @@ export default function ForgotPasswordScreen() {
     },
     resetButtonText: {
       fontSize: 16,
-      fontFamily: 'Inter-SemiBold',
+      fontFamily: "Inter-SemiBold",
       color: theme.colors.white,
     },
     successContainer: {
-      alignItems: 'center',
+      alignItems: "center",
       paddingVertical: theme.spacing.xl,
     },
     successTitle: {
       fontSize: 24,
-      fontFamily: 'Inter-Bold',
+      fontFamily: "Inter-Bold",
       color: theme.colors.success,
-      textAlign: 'center',
+      textAlign: "center",
       marginBottom: theme.spacing.md,
     },
     successText: {
       fontSize: 16,
-      fontFamily: 'Inter-Regular',
+      fontFamily: "Inter-Regular",
       color: theme.colors.textSecondary,
-      textAlign: 'center',
+      textAlign: "center",
       marginBottom: theme.spacing.xl,
     },
     loginContainer: {
-      flexDirection: 'row',
-      justifyContent: 'center',
+      flexDirection: "row",
+      justifyContent: "center",
       marginTop: theme.spacing.xl,
     },
     loginText: {
       fontSize: 14,
-      fontFamily: 'Inter-Regular',
+      fontFamily: "Inter-Regular",
       color: theme.colors.textSecondary,
     },
     loginLink: {
       fontSize: 14,
-      fontFamily: 'Inter-SemiBold',
+      fontFamily: "Inter-SemiBold",
       color: theme.colors.primary,
       marginLeft: theme.spacing.xs,
     },
     errorText: {
       fontSize: 14,
-      fontFamily: 'Inter-Regular',
+      fontFamily: "Inter-Regular",
       color: theme.colors.error,
-      textAlign: 'center',
+      textAlign: "center",
       marginTop: theme.spacing.sm,
     },
-  });
+  })
 
   return (
-    <KeyboardAvoidingView 
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
+    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"}>
       <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => router.back()}
-        >
+        <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
           <ArrowLeft size={24} color={theme.colors.text} />
         </TouchableOpacity>
       </View>
@@ -206,16 +202,15 @@ export default function ForgotPasswordScreen() {
               onPress={handleResetPassword}
               disabled={loading}
             >
-              <Text style={styles.resetButtonText}>
-                {loading ? 'Sending...' : 'Send Reset Link'}
-              </Text>
+              <Text style={styles.resetButtonText}>{loading ? "Sending..." : "Send Reset Link"}</Text>
             </TouchableOpacity>
           </>
         ) : (
           <View style={styles.successContainer}>
             <Text style={styles.successTitle}>Email Sent!</Text>
             <Text style={styles.successText}>
-              We've sent a password reset link to {email}. Check your inbox and follow the instructions to reset your password.
+              We've sent a password reset link to {email}. Check your inbox and follow the instructions to reset your
+              password.
             </Text>
           </View>
         )}
@@ -228,5 +223,5 @@ export default function ForgotPasswordScreen() {
         </View>
       </View>
     </KeyboardAvoidingView>
-  );
+  )
 }

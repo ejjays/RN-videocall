@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+"use client"
+
+import { useState } from "react"
 import {
   View,
   Text,
@@ -8,36 +10,36 @@ import {
   KeyboardAvoidingView,
   Platform,
   Alert,
-} from 'react-native';
-import { Link, router } from 'expo-router';
-import { useAuth } from '@/context/AuthContext';
-import { useTheme } from '@/context/ThemeContext';
-import { Eye, EyeOff, Mail, Lock } from 'lucide-react-native';
+} from "react-native"
+import { Link, router } from "expo-router"
+import { useAuth } from "@/context/AuthContext"
+import { useTheme } from "@/context/ThemeContext"
+import { Eye, EyeOff, Mail, Lock } from "lucide-react-native"
 
 export default function LoginScreen() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const { signIn, error } = useAuth();
-  const { theme } = useTheme();
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [showPassword, setShowPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const { signIn, error } = useAuth()
+  const { theme } = useTheme()
 
   const handleLogin = async () => {
     if (!email || !password) {
-      Alert.alert('Error', 'Please fill in all fields');
-      return;
+      Alert.alert("Error", "Please fill in all fields")
+      return
     }
 
     try {
-      setLoading(true);
-      await signIn(email, password);
-      router.replace('/(tabs)');
+      setLoading(true)
+      await signIn(email, password)
+      router.replace("/(tabs)")
     } catch (error: any) {
-      Alert.alert('Login Failed', error.message);
+      Alert.alert("Login Failed", error.message)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const styles = StyleSheet.create({
     container: {
@@ -46,21 +48,21 @@ export default function LoginScreen() {
     },
     content: {
       flex: 1,
-      justifyContent: 'center',
+      justifyContent: "center",
       paddingHorizontal: theme.spacing.lg,
     },
     title: {
       fontSize: 32,
-      fontFamily: 'Inter-Bold',
+      fontFamily: "Inter-Bold",
       color: theme.colors.text,
-      textAlign: 'center',
+      textAlign: "center",
       marginBottom: theme.spacing.sm,
     },
     subtitle: {
       fontSize: 16,
-      fontFamily: 'Inter-Regular',
+      fontFamily: "Inter-Regular",
       color: theme.colors.textSecondary,
-      textAlign: 'center',
+      textAlign: "center",
       marginBottom: theme.spacing.xxl,
     },
     inputContainer: {
@@ -68,13 +70,13 @@ export default function LoginScreen() {
     },
     label: {
       fontSize: 14,
-      fontFamily: 'Inter-Medium',
+      fontFamily: "Inter-Medium",
       color: theme.colors.text,
       marginBottom: theme.spacing.sm,
     },
     inputWrapper: {
-      flexDirection: 'row',
-      alignItems: 'center',
+      flexDirection: "row",
+      alignItems: "center",
       borderWidth: 1,
       borderColor: theme.colors.border,
       borderRadius: theme.borderRadius.lg,
@@ -91,7 +93,7 @@ export default function LoginScreen() {
     input: {
       flex: 1,
       fontSize: 16,
-      fontFamily: 'Inter-Regular',
+      fontFamily: "Inter-Regular",
       color: theme.colors.text,
     },
     eyeIcon: {
@@ -101,8 +103,8 @@ export default function LoginScreen() {
       backgroundColor: theme.colors.primary,
       borderRadius: theme.borderRadius.lg,
       height: 50,
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: "center",
+      alignItems: "center",
       marginTop: theme.spacing.lg,
       ...theme.shadows.sm,
     },
@@ -111,21 +113,21 @@ export default function LoginScreen() {
     },
     loginButtonText: {
       fontSize: 16,
-      fontFamily: 'Inter-SemiBold',
+      fontFamily: "Inter-SemiBold",
       color: theme.colors.white,
     },
     forgotPassword: {
       marginTop: theme.spacing.md,
-      alignSelf: 'center',
+      alignSelf: "center",
     },
     forgotPasswordText: {
       fontSize: 14,
-      fontFamily: 'Inter-Medium',
+      fontFamily: "Inter-Medium",
       color: theme.colors.primary,
     },
     divider: {
-      flexDirection: 'row',
-      alignItems: 'center',
+      flexDirection: "row",
+      alignItems: "center",
       marginVertical: theme.spacing.lg,
     },
     dividerLine: {
@@ -135,40 +137,37 @@ export default function LoginScreen() {
     },
     dividerText: {
       fontSize: 14,
-      fontFamily: 'Inter-Regular',
+      fontFamily: "Inter-Regular",
       color: theme.colors.textSecondary,
       marginHorizontal: theme.spacing.md,
     },
     signupContainer: {
-      flexDirection: 'row',
-      justifyContent: 'center',
+      flexDirection: "row",
+      justifyContent: "center",
       marginTop: theme.spacing.xl,
     },
     signupText: {
       fontSize: 14,
-      fontFamily: 'Inter-Regular',
+      fontFamily: "Inter-Regular",
       color: theme.colors.textSecondary,
     },
     signupLink: {
       fontSize: 14,
-      fontFamily: 'Inter-SemiBold',
+      fontFamily: "Inter-SemiBold",
       color: theme.colors.primary,
       marginLeft: theme.spacing.xs,
     },
     errorText: {
       fontSize: 14,
-      fontFamily: 'Inter-Regular',
+      fontFamily: "Inter-Regular",
       color: theme.colors.error,
-      textAlign: 'center',
+      textAlign: "center",
       marginTop: theme.spacing.sm,
     },
-  });
+  })
 
   return (
-    <KeyboardAvoidingView 
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
+    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"}>
       <View style={styles.content}>
         <Text style={styles.title}>Welcome Back</Text>
         <Text style={styles.subtitle}>Sign in to continue to PCMI Meet</Text>
@@ -203,10 +202,7 @@ export default function LoginScreen() {
               secureTextEntry={!showPassword}
               autoComplete="password"
             />
-            <TouchableOpacity
-              onPress={() => setShowPassword(!showPassword)}
-              style={styles.eyeIcon}
-            >
+            <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.eyeIcon}>
               {showPassword ? (
                 <EyeOff size={20} color={theme.colors.textSecondary} />
               ) : (
@@ -223,9 +219,7 @@ export default function LoginScreen() {
           onPress={handleLogin}
           disabled={loading}
         >
-          <Text style={styles.loginButtonText}>
-            {loading ? 'Signing In...' : 'Sign In'}
-          </Text>
+          <Text style={styles.loginButtonText}>{loading ? "Signing In..." : "Sign In"}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.forgotPassword}>
@@ -248,5 +242,5 @@ export default function LoginScreen() {
         </View>
       </View>
     </KeyboardAvoidingView>
-  );
+  )
 }

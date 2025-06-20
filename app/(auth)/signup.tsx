@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+"use client"
+
+import { useState } from "react"
 import {
   View,
   Text,
@@ -8,49 +10,49 @@ import {
   KeyboardAvoidingView,
   Platform,
   Alert,
-} from 'react-native';
-import { Link, router } from 'expo-router';
-import { useAuth } from '@/context/AuthContext';
-import { useTheme } from '@/context/ThemeContext';
-import { Eye, EyeOff, Mail, Lock, User } from 'lucide-react-native';
+} from "react-native"
+import { Link, router } from "expo-router"
+import { useAuth } from "@/context/AuthContext"
+import { useTheme } from "@/context/ThemeContext"
+import { Eye, EyeOff, Mail, Lock, User } from "lucide-react-native"
 
 export default function SignupScreen() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const { signUp, error } = useAuth();
-  const { theme } = useTheme();
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const { signUp, error } = useAuth()
+  const { theme } = useTheme()
 
   const handleSignup = async () => {
     if (!name || !email || !password || !confirmPassword) {
-      Alert.alert('Error', 'Please fill in all fields');
-      return;
+      Alert.alert("Error", "Please fill in all fields")
+      return
     }
 
     if (password !== confirmPassword) {
-      Alert.alert('Error', 'Passwords do not match');
-      return;
+      Alert.alert("Error", "Passwords do not match")
+      return
     }
 
     if (password.length < 6) {
-      Alert.alert('Error', 'Password must be at least 6 characters');
-      return;
+      Alert.alert("Error", "Password must be at least 6 characters")
+      return
     }
 
     try {
-      setLoading(true);
-      await signUp(email, password, name);
-      router.replace('/(tabs)');
+      setLoading(true)
+      await signUp(email, password, name)
+      router.replace("/(tabs)")
     } catch (error: any) {
-      Alert.alert('Signup Failed', error.message);
+      Alert.alert("Signup Failed", error.message)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const styles = StyleSheet.create({
     container: {
@@ -59,21 +61,21 @@ export default function SignupScreen() {
     },
     content: {
       flex: 1,
-      justifyContent: 'center',
+      justifyContent: "center",
       paddingHorizontal: theme.spacing.lg,
     },
     title: {
       fontSize: 32,
-      fontFamily: 'Inter-Bold',
+      fontFamily: "Inter-Bold",
       color: theme.colors.text,
-      textAlign: 'center',
+      textAlign: "center",
       marginBottom: theme.spacing.sm,
     },
     subtitle: {
       fontSize: 16,
-      fontFamily: 'Inter-Regular',
+      fontFamily: "Inter-Regular",
       color: theme.colors.textSecondary,
-      textAlign: 'center',
+      textAlign: "center",
       marginBottom: theme.spacing.xxl,
     },
     inputContainer: {
@@ -81,13 +83,13 @@ export default function SignupScreen() {
     },
     label: {
       fontSize: 14,
-      fontFamily: 'Inter-Medium',
+      fontFamily: "Inter-Medium",
       color: theme.colors.text,
       marginBottom: theme.spacing.sm,
     },
     inputWrapper: {
-      flexDirection: 'row',
-      alignItems: 'center',
+      flexDirection: "row",
+      alignItems: "center",
       borderWidth: 1,
       borderColor: theme.colors.border,
       borderRadius: theme.borderRadius.lg,
@@ -101,7 +103,7 @@ export default function SignupScreen() {
     input: {
       flex: 1,
       fontSize: 16,
-      fontFamily: 'Inter-Regular',
+      fontFamily: "Inter-Regular",
       color: theme.colors.text,
     },
     eyeIcon: {
@@ -111,8 +113,8 @@ export default function SignupScreen() {
       backgroundColor: theme.colors.primary,
       borderRadius: theme.borderRadius.lg,
       height: 50,
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: "center",
+      alignItems: "center",
       marginTop: theme.spacing.lg,
       ...theme.shadows.sm,
     },
@@ -121,39 +123,36 @@ export default function SignupScreen() {
     },
     signupButtonText: {
       fontSize: 16,
-      fontFamily: 'Inter-SemiBold',
+      fontFamily: "Inter-SemiBold",
       color: theme.colors.white,
     },
     loginContainer: {
-      flexDirection: 'row',
-      justifyContent: 'center',
+      flexDirection: "row",
+      justifyContent: "center",
       marginTop: theme.spacing.xl,
     },
     loginText: {
       fontSize: 14,
-      fontFamily: 'Inter-Regular',
+      fontFamily: "Inter-Regular",
       color: theme.colors.textSecondary,
     },
     loginLink: {
       fontSize: 14,
-      fontFamily: 'Inter-SemiBold',
+      fontFamily: "Inter-SemiBold",
       color: theme.colors.primary,
       marginLeft: theme.spacing.xs,
     },
     errorText: {
       fontSize: 14,
-      fontFamily: 'Inter-Regular',
+      fontFamily: "Inter-Regular",
       color: theme.colors.error,
-      textAlign: 'center',
+      textAlign: "center",
       marginTop: theme.spacing.sm,
     },
-  });
+  })
 
   return (
-    <KeyboardAvoidingView 
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
+    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"}>
       <View style={styles.content}>
         <Text style={styles.title}>Create Account</Text>
         <Text style={styles.subtitle}>Join PCMI Meet today</Text>
@@ -204,10 +203,7 @@ export default function SignupScreen() {
               secureTextEntry={!showPassword}
               autoComplete="password-new"
             />
-            <TouchableOpacity
-              onPress={() => setShowPassword(!showPassword)}
-              style={styles.eyeIcon}
-            >
+            <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.eyeIcon}>
               {showPassword ? (
                 <EyeOff size={20} color={theme.colors.textSecondary} />
               ) : (
@@ -230,10 +226,7 @@ export default function SignupScreen() {
               secureTextEntry={!showConfirmPassword}
               autoComplete="password-new"
             />
-            <TouchableOpacity
-              onPress={() => setShowConfirmPassword(!showConfirmPassword)}
-              style={styles.eyeIcon}
-            >
+            <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)} style={styles.eyeIcon}>
               {showConfirmPassword ? (
                 <EyeOff size={20} color={theme.colors.textSecondary} />
               ) : (
@@ -250,9 +243,7 @@ export default function SignupScreen() {
           onPress={handleSignup}
           disabled={loading}
         >
-          <Text style={styles.signupButtonText}>
-            {loading ? 'Creating Account...' : 'Create Account'}
-          </Text>
+          <Text style={styles.signupButtonText}>{loading ? "Creating Account..." : "Create Account"}</Text>
         </TouchableOpacity>
 
         <View style={styles.loginContainer}>
@@ -263,5 +254,5 @@ export default function SignupScreen() {
         </View>
       </View>
     </KeyboardAvoidingView>
-  );
+  )
 }
