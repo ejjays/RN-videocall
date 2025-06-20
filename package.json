@@ -15,7 +15,7 @@
   "dependencies": {
     "@expo-google-fonts/inter": "~0.2.3",
     "@expo/vector-icons": "^14.0.4",
-    "@react-native-async-storage/async-storage": "1.23.1",
+    "@react-native-async-storage/async-storage": "^1.23.1",
     "@react-navigation/native": "^6.0.2",
     "@stream-io/video-react-native-sdk": "^1.0.0",
     "expo": "~52.0.11",
