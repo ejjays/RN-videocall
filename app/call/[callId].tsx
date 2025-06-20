@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { View, Text, StyleSheet, TouchableOpacity, Alert, Dimensions, Platform } from "react-native"
 import { router, useLocalSearchParams } from "expo-router"
 import { useTheme } from "@/context/ThemeContext"
-import { useStream } from "@/context/StreamContext"
+// import { useStream } from "@/context/StreamContext"
 import { SafeAreaView } from "react-native-safe-area-context"
 import {
   Video,
@@ -23,7 +23,7 @@ const { width, height } = Dimensions.get("window")
 export default function CallScreen() {
   const { callId, type, contact } = useLocalSearchParams()
   const { theme } = useTheme()
-  const { client, user } = useStream()
+ // const { client, user } = useStream()
 
   const [isVideoEnabled, setIsVideoEnabled] = useState(type === "video")
   const [isAudioEnabled, setIsAudioEnabled] = useState(true)

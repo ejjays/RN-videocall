@@ -3,7 +3,7 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useFrameworkReady } from '@/hooks/useFrameworkReady';
 import { AuthProvider } from '@/context/AuthContext';
-// import { StreamProvider } from '@/context/StreamContext'; // Comment this out
+// import { StreamProvider } from '@/context/StreamContext'; 
 import { ThemeProvider } from '@/context/ThemeContext';
 import { useFonts } from 'expo-font';
 import {
