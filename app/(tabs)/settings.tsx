@@ -1,5 +1,3 @@
-"use client"
-
 import type React from "react"
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Switch, Alert, ScrollView } from "react-native"
 import { router } from "expo-router"
