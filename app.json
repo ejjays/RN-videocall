@@ -16,12 +16,7 @@
       }
     },
     "android": {
-      "permissions": [
-        "CAMERA",
-        "RECORD_AUDIO",
-        "INTERNET"
-      ],
-      "package": "com.ejjays.pcmimeet"
+      "permissions": ["CAMERA", "RECORD_AUDIO", "INTERNET"]
     },
     "web": {
       "bundler": "metro",
@@ -29,18 +24,12 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "./plugins/withStreamAndroid.js" 
     ],
     "experiments": {
       "typedRoutes": true
-    },
-    "extra": {
-      "router": {
-        "origin": false
-      },
-      "eas": {
-        "projectId": "dc74615f-b0e7-4ac8-9dd1-bf921fbbe89f"
-      }
     }
   }
 }
+
