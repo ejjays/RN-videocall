@@ -7,7 +7,7 @@
     "icon": "./assets/images/icon.png",
     "scheme": "pcmi-meet",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
+    "newArchEnabled": false, 
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
@@ -16,11 +16,7 @@
       }
     },
     "android": {
-      "permissions": [
-        "CAMERA",
-        "RECORD_AUDIO",
-        "INTERNET"
-      ]
+      "permissions": ["CAMERA", "RECORD_AUDIO", "INTERNET"]
     },
     "web": {
       "bundler": "metro",
@@ -33,14 +29,7 @@
     ],
     "experiments": {
       "typedRoutes": true
-    },
-    "extra": {
-      "router": {
-        "origin": false
-      },
-      "eas": {
-        "projectId": "dc74615f-b0e7-4ac8-9dd1-bf921fbbe89f"
-      }
     }
   }
 }
+
