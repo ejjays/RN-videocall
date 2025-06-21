@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, SafeAreaView, FlatList, TouchableOpacity, TextI
 import { router } from "expo-router"
 import { useTheme } from "@/context/ThemeContext"
 import { Search, Plus, Video, Phone, User } from "lucide-react-native"
+import { useStream } from "@/context/StreamContext" // Import the useStream hook
 
 interface Contact {
   id: string
@@ -14,6 +15,7 @@ interface Contact {
 
 export default function ContactsScreen() {
   const { theme } = useTheme()
+  const { client } = useStream() // Get the Stream client from the context
   const [searchQuery, setSearchQuery] = useState("")
   const [contacts] = useState<Contact[]>([
     {
@@ -67,15 +69,49 @@ export default function ContactsScreen() {
     }
   }
 
-  const startVideoCall = (contact: Contact) => {
-    const callId = `call-${Date.now()}`
-    router.push(`/call/${callId}?type=video&contact=${contact.id}`)
-  }
+  const startVideoCall = async (contact: Contact) => {
+    if (!client) {
+      Alert.alert("Error", "Stream client not available. Please try again later.");
+      return;
+    }
+    // The user ID of the person to call
+    const otherUserId = contact.id;
+  
+    // Create a call with the other user
+    const call = client.call('default', otherUserId);
+  
+    try {
+      // This will create the call on Stream's servers and initializes the call object
+      await call.getOrCreate();
+      // Navigate to the call screen
+      router.push(`/call/${otherUserId}?type=video&contact=${contact.id}`);
+    } catch (err) {
+      console.error("Failed to create video call", err);
+      Alert.alert("Error", "Failed to start video call.");
+    }
+  };
+  
+  const startAudioCall = async (contact: Contact) => {
+    if (!client) {
+      Alert.alert("Error", "Stream client not available. Please try again later.");
+      return;
+    }
+    const otherUserId = contact.id;
 
-  const startAudioCall = (contact: Contact) => {
-    const callId = `call-${Date.now()}`
-    router.push(`/call/${callId}?type=audio&contact=${contact.id}`)
-  }
+    const call = client.call('default', otherUserId);
+    try {
+      await call.getOrCreate({
+        ringing: true,
+        data: {
+          custom: { call_type: 'audio' } 
+        }
+      });
+      router.push(`/call/${otherUserId}?type=audio&contact=${contact.id}`);
+    } catch (err) {
+      console.error("Failed to create audio call", err);
+      Alert.alert("Error", "Failed to start audio call.");
+    }
+  };
 
   const addContact = () => {
     Alert.alert("Add Contact", "Contact management feature coming soon!")
@@ -138,6 +174,7 @@ export default function ContactsScreen() {
       paddingHorizontal: theme.spacing.md,
       marginBottom: theme.spacing.md,
       height: 50,
+      flex: 1,
     },
     searchIcon: {
       marginRight: theme.spacing.sm,

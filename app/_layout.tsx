@@ -3,7 +3,7 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useFrameworkReady } from '@/hooks/useFrameworkReady';
 import { AuthProvider } from '@/context/AuthContext';
-// import { StreamProvider } from '@/context/StreamContext'; 
+import { StreamProvider } from '@/context/StreamContext'; // Import StreamProvider
 import { ThemeProvider } from '@/context/ThemeContext';
 import { useFonts } from 'expo-font';
 import {
@@ -39,7 +39,7 @@ export default function RootLayout() {
   return (
     <ThemeProvider>
       <AuthProvider>
-        {/* <StreamProvider> */}
+        <StreamProvider> {/* Add the StreamProvider here */}
           <Stack screenOptions={{ headerShown: false }}>
             <Stack.Screen name="(auth)" />
             <Stack.Screen name="(tabs)" />
@@ -47,7 +47,7 @@ export default function RootLayout() {
             <Stack.Screen name="+not-found" />
           </Stack>
           <StatusBar style="auto" />
-        {/* </StreamProvider> */}
+        </StreamProvider>
       </AuthProvider>
     </ThemeProvider>
   );
